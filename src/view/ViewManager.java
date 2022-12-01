@@ -1,8 +1,12 @@
 package view;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.SpaceRunnerButton;
 
 public class ViewManager {
 
@@ -18,9 +22,15 @@ public class ViewManager {
 		mainScene = new Scene(mainPane,WIDTH,HEIGHT);
 		mainStage = new Stage();
 		mainStage.setScene(mainScene);
+		createButtons();
 	}
 	
 	public Stage getMainStage() {
 		return mainStage;
+	}
+	
+	private void createButtons() {
+		SpaceRunnerButton button = new SpaceRunnerButton("click me!");
+		mainPane.getChildren().add(button);
 	}
 }
