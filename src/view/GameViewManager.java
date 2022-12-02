@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.SHIP;
 
@@ -27,13 +28,16 @@ public class GameViewManager {
 	private int angle;
 	private AnimationTimer gameTimer;
 	
+	private GridPane gridPane1;
+	private GridPane gridPane2;
+	private final static String BACKGROUND_IMAGE = "view/resources/blue.png";
 	
 	public GameViewManager() {
 		initializeStage();
-		createKeysListeners();
+		createKeyListeners();
 	}
 	
-	private void createKeysListeners() {
+	private void createKeyListeners() {
 		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
@@ -71,6 +75,7 @@ public class GameViewManager {
 	public void createNewGame(Stage menuStage, SHIP chosenShip) {
 		this.menuStage = menuStage;
 		this.menuStage.hide();
+		createBackground();
 		createShip(chosenShip);
 		createGameLoop();
 		gameStage.show();
@@ -89,6 +94,7 @@ public class GameViewManager {
 
 			@Override
 			public void handle(long now) {
+				moveBackground();
 				moveShip();
 			}
 			
@@ -136,5 +142,35 @@ public class GameViewManager {
 			ship.setRotate(angle);
 		}
 		
+	}
+	
+	private void createBackground() {
+		gridPane1 = new GridPane();
+		gridPane2 = new GridPane();
+		
+		for (int i = 0 ; i < 12; i++) {
+			ImageView backgroundImage1 = new ImageView(BACKGROUND_IMAGE);
+			ImageView backgroundImage2 = new ImageView(BACKGROUND_IMAGE);
+			GridPane.setConstraints(backgroundImage1, i% 3, i / 3 );
+			GridPane.setConstraints(backgroundImage2, i% 3, i / 3 );
+			gridPane1.getChildren().add(backgroundImage1);
+			gridPane2.getChildren().add(backgroundImage2);
+		}
+		
+		gridPane2.setLayoutY(- 1024);
+		gamePane.getChildren().addAll(gridPane1, gridPane2);
+	}
+	
+	private void moveBackground() {
+		gridPane1.setLayoutY(gridPane1.getLayoutY() + 0.5);
+		gridPane2.setLayoutY(gridPane2.getLayoutY() + 0.5);
+		
+		if (gridPane1.getLayoutY() >= 1024) {
+			gridPane1.setLayoutY(-1024);
+		}
+		
+		if (gridPane2.getLayoutY() >= 1024) {
+			gridPane2.setLayoutY(-1024);
+		}
 	}
 }
