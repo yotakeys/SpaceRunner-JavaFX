@@ -9,7 +9,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -19,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.SpaceRunnerButton;
+import model.SpaceRunnerSubScene;
 
 public class ViewManager {
 
@@ -43,6 +46,13 @@ public class ViewManager {
 		createButtons();
 		createBackground();
 		createLogo();
+		
+		SpaceRunnerSubScene subScene = new SpaceRunnerSubScene();
+		
+		subScene.setLayoutX(200);
+		subScene.setLayoutY(180);
+		
+		mainPane.getChildren().add(subScene);
 	}
 	
 	public Stage getMainStage() {
@@ -105,6 +115,24 @@ public class ViewManager {
 		catch (FileNotFoundException e) {
 			logo.setFont(Font.font("Verdana", 40));
 		}
+		
+		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				logo.setEffect(new DropShadow());
+				
+			}
+		});
+		
+		logo.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				logo.setEffect(null);
+				
+			}
+		});
 		
 		logo.setLayoutX(480);
 		logo.setLayoutY(100);
