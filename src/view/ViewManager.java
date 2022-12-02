@@ -84,14 +84,11 @@ public class ViewManager {
 	}
 
 	private void createSubScenes() {
-		creditsSubScene = new SpaceRunnerSubScene();
-		mainPane.getChildren().add(creditsSubScene);
+		createCreditSubScene();
 
-		scoreSubScene = new SpaceRunnerSubScene();
-		mainPane.getChildren().add(scoreSubScene);
+		createScoreSubScene();
 
-		helpSubScene = new SpaceRunnerSubScene();
-		mainPane.getChildren().add(helpSubScene);
+		createHelpSubScene();
 
 		createShipChooseSubScene();
 	}
@@ -107,6 +104,36 @@ public class ViewManager {
 		shipChooserScene.getPane().getChildren().add(chooseShipLabel);		
 		shipChooserScene.getPane().getChildren().add(createShipsToChoose());
 		shipChooserScene.getPane().getChildren().add(createButtonToStart());
+	}
+	
+	private void createHelpSubScene() {
+		helpSubScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(helpSubScene);
+		InfoLabel help = new InfoLabel("                  HELP");
+		help.setLayoutX(110);
+		help.setLayoutY(25);
+		
+		helpSubScene.getPane().getChildren().add(help);
+	}
+	
+	private void createScoreSubScene() {
+		scoreSubScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(scoreSubScene);
+		InfoLabel score = new InfoLabel(" PLAYER SCORES ");
+		score.setLayoutX(110);
+		score.setLayoutY(25);
+		
+		scoreSubScene.getPane().getChildren().add(score);
+	}
+	
+	private void createCreditSubScene() {
+		creditsSubScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(creditsSubScene);
+		InfoLabel credit = new InfoLabel("             CREDITS");
+		credit.setLayoutX(110);
+		credit.setLayoutY(25);
+		
+		creditsSubScene.getPane().getChildren().add(credit);
 	}
 	
 	private HBox createShipsToChoose() {
