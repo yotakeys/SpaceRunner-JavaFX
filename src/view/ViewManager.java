@@ -64,12 +64,17 @@ public class ViewManager {
 	}
 	
 	private void showSubScene(SpaceRunnerSubScene subScene) {
-		if(sceneToHide != null) {
-			sceneToHide.moveSubScene();
+		if(sceneToHide != subScene) {
+			if(sceneToHide != null) {
+				sceneToHide.moveSubScene();
+			}
+			
+			subScene.moveSubScene();
+			sceneToHide = subScene;	
+		}else {
+			sceneToHide = null;
+			subScene.moveSubScene();
 		}
-		
-		subScene.moveSubScene();
-		sceneToHide = subScene;
 	}
 
 	private void createSubScenes() {
