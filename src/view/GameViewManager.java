@@ -6,6 +6,7 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -102,6 +103,9 @@ public class GameViewManager {
 		createGameElements(chosenShip);
 		createGameLoop();
 		gameStage.setResizable(false);
+		gameStage.setTitle("Space Runner");
+		gameStage.getIcons().add(
+				   new Image("view/resources/shipchooser/blue_life.png"));
 		gameStage.show();
 
 	}
