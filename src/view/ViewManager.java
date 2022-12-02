@@ -133,7 +133,32 @@ public class ViewManager {
 		credit.setLayoutX(110);
 		credit.setLayoutY(25);
 		
+		Text nama = new Text("Nama : Keyisa Raihan");
+		Text nrp = new Text("NRP : 5025211002");
+		
+		Text linkYoutube = new Text("Tutorial from Youtube : Java Carving / takeCert");
+		
+		nama.setLayoutY(150);
+		nama.setLayoutX(80);
+		nrp.setLayoutY(200);
+		nrp.setLayoutX(80);
+		linkYoutube.setLayoutY(250);
+		linkYoutube.setLayoutX(80);
+		
+		try {
+			nama.setFont(Font.loadFont(new FileInputStream("src/model/resources/kenvector_future.ttf"), 15));
+			nrp.setFont(Font.loadFont(new FileInputStream("src/model/resources/kenvector_future.ttf"), 15));
+			linkYoutube.setFont(Font.loadFont(new FileInputStream("src/model/resources/kenvector_future.ttf"), 15));
+		} catch (FileNotFoundException e) {
+			nama.setFont(Font.font("Verdana", 40));
+			nrp.setFont(Font.font("Verdana", 40));
+			linkYoutube.setFont(Font.font("Verdana", 40));
+		}
+		
 		creditsSubScene.getPane().getChildren().add(credit);
+		creditsSubScene.getPane().getChildren().add(nama);
+		creditsSubScene.getPane().getChildren().add(nrp);
+		creditsSubScene.getPane().getChildren().add(linkYoutube);
 	}
 	
 	private HBox createShipsToChoose() {
