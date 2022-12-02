@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -35,6 +36,9 @@ public class ViewManager {
 	private final static int MENU_BUTTON_START_X = 100;
 	private final static int MENU_BUTTON_START_Y = 150;
 	
+	private SpaceRunnerSubScene creditsSubScene;
+	
+	
 	List<SpaceRunnerButton> menuButtons;
 	
 	public ViewManager() {
@@ -47,16 +51,16 @@ public class ViewManager {
 		createBackground();
 		createLogo();
 		
-		SpaceRunnerSubScene subScene = new SpaceRunnerSubScene();
-		
-		subScene.setLayoutX(200);
-		subScene.setLayoutY(180);
-		
-		mainPane.getChildren().add(subScene);
+		createSubScenes();
 	}
 	
 	public Stage getMainStage() {
 		return mainStage;
+	}
+	
+	private void createSubScenes() {
+		creditsSubScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(creditsSubScene);
 	}
 	
 	private void addMenuButton(SpaceRunnerButton button) {
@@ -93,6 +97,13 @@ public class ViewManager {
 	private void createCreditsButton() {
 		SpaceRunnerButton creditsButton = new SpaceRunnerButton("CREDITS");
 		addMenuButton(creditsButton);
+		
+		creditsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				creditsSubScene.moveSubScene();
+			}
+		});
 	}
 	
 	private void createExitButton() {
