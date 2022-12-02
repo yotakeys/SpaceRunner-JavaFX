@@ -11,4 +11,8 @@ public enum SHIP {
 	private SHIP(String urlShip) {
 		this.urlShip = urlShip;
 	}
+	
+	public String getUrl() {
+		return urlShip;
+	}
 }

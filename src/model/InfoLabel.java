@@ -15,14 +15,21 @@ import javafx.scene.text.Font;
 
 public class InfoLabel extends Label{
 	public final static String FONT_PATH = "src/model/resources/kenvector_future.ttf";
+	public final static String BG_IMAGE = "view/resources/yellow_small_panel.png";
 	
 	public InfoLabel(String text) {
 		setPrefWidth(600);
-		setPrefHeight(400);
-		setPadding(new Insets(40, 40, 40, 40));
+		setPrefHeight(49);
+		setPadding(new Insets(10, 40, 40, 50));
 		setText(text);
 		setWrapText(true);
 		setLabelFont();
+		//setAlignment(Pos.CENTER);
+		
+		BackgroundImage bgImage = new BackgroundImage(new Image(BG_IMAGE, 380, 50, false, true), 
+				BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+		
+		setBackground(new Background(bgImage));
 				
 	}
 	

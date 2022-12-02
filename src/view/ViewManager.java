@@ -18,9 +18,13 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.InfoLabel;
+import model.SHIP;
+import model.ShipPicker;
 import model.SpaceRunnerButton;
 import model.SpaceRunnerSubScene;
 
@@ -44,6 +48,8 @@ public class ViewManager {
 	private SpaceRunnerSubScene sceneToHide;
 
 	List<SpaceRunnerButton> menuButtons;
+	List<ShipPicker> shipsList;
+	private SHIP chosenShip;
 
 	public ViewManager() {
 		menuButtons = new ArrayList<>();
@@ -87,9 +93,55 @@ public class ViewManager {
 		helpSubScene = new SpaceRunnerSubScene();
 		mainPane.getChildren().add(helpSubScene);
 
+		createShipChooseSubScene();
+	}
+	
+	private void createShipChooseSubScene() {
 		shipChooserScene = new SpaceRunnerSubScene();
 		mainPane.getChildren().add(shipChooserScene);
+		
+		InfoLabel chooseShipLabel = new InfoLabel("CHOOSE YOUR SHIP");
+		chooseShipLabel.setLayoutX(110);
+		chooseShipLabel.setLayoutY(25);
+		
+		shipChooserScene.getPane().getChildren().add(chooseShipLabel);		
+		shipChooserScene.getPane().getChildren().add(createShipsToChoose());
+		shipChooserScene.getPane().getChildren().add(createButtonToStart());
 	}
+	
+	private HBox createShipsToChoose() {
+		HBox box = new HBox();
+		box.setSpacing(20);
+		shipsList = new ArrayList<>();
+		for (SHIP ship : SHIP.values()) {
+			ShipPicker shipToPick = new ShipPicker(ship);
+			shipsList.add(shipToPick);
+			box.getChildren().add(shipToPick);
+			shipToPick.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent arg0) {
+					for (ShipPicker ship : shipsList) {
+						ship.setIsCircleChosen(false);
+					}
+					shipToPick.setIsCircleChosen(true);
+					chosenShip = shipToPick.getShip();
+				}
+			});
+		}
+		box.setLayoutX(300 - 118 * 2);
+		box.setLayoutY(120);
+		return box;
+	}
+	
+	private SpaceRunnerButton createButtonToStart() {
+		SpaceRunnerButton startButton = new SpaceRunnerButton("START");
+		startButton.setLayoutX(350);
+		startButton.setLayoutY(320);
+		
+		return startButton;
+	}
+	
+	
 
 	private void addMenuButton(SpaceRunnerButton button) {
 		button.setLayoutX(MENU_BUTTON_START_X);

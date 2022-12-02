@@ -1,7 +1,5 @@
 package model;
 
-import java.time.Duration;
-
 import javafx.animation.TranslateTransition;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
@@ -46,5 +44,9 @@ public class SpaceRunnerSubScene extends SubScene{
 			isHidden = true;
 		}
 		transition.play();
+	}
+	
+	public AnchorPane getPane() {
+		return (AnchorPane) this.getRoot();	
 	}
 }
