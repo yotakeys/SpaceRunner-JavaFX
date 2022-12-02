@@ -101,6 +101,7 @@ public class GameViewManager {
 		createShip(chosenShip);
 		createGameElements(chosenShip);
 		createGameLoop();
+		gameStage.setResizable(false);
 		gameStage.show();
 
 	}
