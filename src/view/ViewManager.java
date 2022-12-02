@@ -28,49 +28,71 @@ public class ViewManager {
 
 	private static final int HEIGHT = 650;
 	private static final int WIDTH = 1024;
-	
+
 	private AnchorPane mainPane;
 	private Scene mainScene;
 	private Stage mainStage;
-	
+
 	private final static int MENU_BUTTON_START_X = 100;
 	private final static int MENU_BUTTON_START_Y = 150;
-	
+
 	private SpaceRunnerSubScene creditsSubScene;
+	private SpaceRunnerSubScene helpSubScene;
+	private SpaceRunnerSubScene scoreSubScene;
+	private SpaceRunnerSubScene shipChooserScene;
 	
-	
+	private SpaceRunnerSubScene sceneToHide;
+
 	List<SpaceRunnerButton> menuButtons;
-	
+
 	public ViewManager() {
 		menuButtons = new ArrayList<>();
 		mainPane = new AnchorPane();
-		mainScene = new Scene(mainPane,WIDTH,HEIGHT);
+		mainScene = new Scene(mainPane, WIDTH, HEIGHT);
 		mainStage = new Stage();
 		mainStage.setScene(mainScene);
+		
+		createSubScenes();
 		createButtons();
 		createBackground();
 		createLogo();
-		
-		createSubScenes();
+
 	}
-	
+
 	public Stage getMainStage() {
 		return mainStage;
 	}
 	
+	private void showSubScene(SpaceRunnerSubScene subScene) {
+		if(sceneToHide != null) {
+			sceneToHide.moveSubScene();
+		}
+		
+		subScene.moveSubScene();
+		sceneToHide = subScene;
+	}
+
 	private void createSubScenes() {
 		creditsSubScene = new SpaceRunnerSubScene();
 		mainPane.getChildren().add(creditsSubScene);
+
+		scoreSubScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(scoreSubScene);
+
+		helpSubScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(helpSubScene);
+
+		shipChooserScene = new SpaceRunnerSubScene();
+		mainPane.getChildren().add(shipChooserScene);
 	}
-	
+
 	private void addMenuButton(SpaceRunnerButton button) {
 		button.setLayoutX(MENU_BUTTON_START_X);
 		button.setLayoutY(MENU_BUTTON_START_Y + menuButtons.size() * 100);
 		menuButtons.add(button);
 		mainPane.getChildren().add(button);
 	}
-	
-	
+
 	private void createButtons() {
 		createStartButton();
 		createScoresButton();
@@ -78,78 +100,104 @@ public class ViewManager {
 		createCreditsButton();
 		createExitButton();
 	}
-	
+
 	private void createStartButton() {
 		SpaceRunnerButton startButton = new SpaceRunnerButton("PlAY");
 		addMenuButton(startButton);
-	}
-	
-	private void createScoresButton() {
-		SpaceRunnerButton scoresButton = new SpaceRunnerButton("SCORES");
-		addMenuButton(scoresButton);
-	}
-	
-	private void createHelpButton() {
-		SpaceRunnerButton helpButton = new SpaceRunnerButton("HELP");
-		addMenuButton(helpButton);
-	}
-	
-	private void createCreditsButton() {
-		SpaceRunnerButton creditsButton = new SpaceRunnerButton("CREDITS");
-		addMenuButton(creditsButton);
-		
-		creditsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				creditsSubScene.moveSubScene();
+				showSubScene(shipChooserScene);
 			}
 		});
 	}
-	
+
+	private void createScoresButton() {
+		SpaceRunnerButton scoresButton = new SpaceRunnerButton("SCORES");
+		addMenuButton(scoresButton);
+
+		scoresButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				showSubScene(scoreSubScene);
+			}
+		});
+	}
+
+	private void createHelpButton() {
+		SpaceRunnerButton helpButton = new SpaceRunnerButton("HELP");
+		addMenuButton(helpButton);
+
+		helpButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				showSubScene(helpSubScene);
+			}
+		});
+	}
+
+	private void createCreditsButton() {
+		SpaceRunnerButton creditsButton = new SpaceRunnerButton("CREDITS");
+		addMenuButton(creditsButton);
+
+		creditsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				showSubScene(creditsSubScene);
+			}
+		});
+	}
+
 	private void createExitButton() {
 		SpaceRunnerButton exitButton = new SpaceRunnerButton("EXIT");
 		addMenuButton(exitButton);
+		
+		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				mainStage.close();
+			}
+		});
 	}
-	
-	
+
 	private void createBackground() {
-		Image backgroundImage = new Image("view/resources/blue.png", 256,256, false,true);
-		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+		Image backgroundImage = new Image("view/resources/blue.png", 256, 256, false, true);
+		BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,
+				BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
 		mainPane.setBackground(new Background(background));
 	}
-	
+
 	private void createLogo() {
 		Text logo = new Text("SPACE RUNNER");
 		try {
 			logo.setFont(Font.loadFont(new FileInputStream("src/model/resources/kenvector_future.ttf"), 50));
-		}
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			logo.setFont(Font.font("Verdana", 40));
 		}
-		
+
 		logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				logo.setEffect(new DropShadow());
-				
+
 			}
 		});
-		
+
 		logo.setOnMouseExited(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				logo.setEffect(null);
-				
+
 			}
 		});
-		
+
 		logo.setLayoutX(480);
 		logo.setLayoutY(100);
-		
-		
+
 		mainPane.getChildren().add(logo);
-		
+
 	}
 }
